@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pali Multi-speciality Dental Care</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    body {
+      font-family: Arial;
+      margin: 0;
+      background: #f5f7fa;
+    }
+
+    header {
+      background: linear-gradient(45deg,#4facfe,#43e97b,#fa709a);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    h3 {
+      margin-top: 10px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      background: linear-gradient(45deg,#667eea,#764ba2);
+      color: white;
+      font-size: 16px;
+      border-radius: 12px;
+      margin-top: 10px;
+    }
+
+    .note {
+      font-size: 12px;
+      color: gray;
+      text-align: center;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h2>🦷 Pali Multi-speciality Dental Care</h2>
+  <p>Dr. Pooja Pali</p>
+</header>
+
+<div class="container">
+
+<h3>Book Appointment</h3>
+
+<input id="name" placeholder="Your Name">
+<input id="phone" placeholder="Phone Number">
+<input id="problem" placeholder="Problem">
+
+<input type="date" id="date">
+
+<select id="time"></select>
+
+<button onclick="book()">Book via WhatsApp</button>
+
+<p class="note">Consultation Fee ₹200 (adjustable)</p>
+
+</div>
+
+<script>
+
+// Generate time slots automatically
+function generateSlots() {
+  let select = document.getElementById("time");
+
+  let startHour = 10; // 10 AM
+  let endHour = 21;   // 9 PM
+
+  for (let hour = startHour; hour < endHour; hour++) {
+    for (let min of [0, 30]) {
+
+      let h = hour;
+      let m = min === 0 ? "00" : "30";
+
+      let period = h >= 12 ? "PM" : "AM";
+      let displayHour = h > 12 ? h - 12 : h;
+      if (displayHour === 0) displayHour = 12;
+
+      let timeText = `${displayHour}:${m} ${period}`;
+
+      let option = document.createElement("option");
+      option.value = timeText;
+      option.textContent = timeText;
+
+      select.appendChild(option);
+    }
+  }
+}
+
+generateSlots();
+
+// WhatsApp Booking
+function book() {
+  let name = document.getElementById("name").value;
+  let phone = document.getElementById("phone").value;
+  let problem = document.getElementById("problem").value;
+  let date = document.getElementById("date").value;
+  let time = document.getElementById("time").value;
+
+  if (!name || !phone || !date) {
+    alert("Please fill all required fields");
+    return;
+  }
+
+  let msg = `Hi Dr. Pooja Pali,%0A
+I want to book an appointment.%0A
+Name: ${name}%0A
+Phone: ${phone}%0A
+Date: ${date}%0A
+Time: ${time}%0A
+Problem: ${problem}`;
+
+  window.open("https://wa.me/919877963213?text=" + msg);
+}
+
+</script>
+
+</body>
+</html>
